@@ -3,12 +3,14 @@ let loadButton;
 let revButton;
 let inp;
 let board;
+let picker;
 function setup(){
 
     createCanvas(500,500);
 
     board = new Board();
-    
+    picker = new PickColor(width/2,height+10,100);
+
     inp = createInput("Image url");
     inp.position(0,height-20)
 
@@ -17,18 +19,22 @@ function setup(){
     loadButton.position(0,height);
 
     revButton = createButton("Reverse color");
-    revButton.mousePressed(board.rev);
+    revButton.mousePressed(rev);
     revButton.position(loadButton.width,height)
 
 
-    colorMode(HSB,100,100,100);
     
+}
+
+function rev(){
+    board.rev();
 }
 
 function mousePressed(){
     if(!board.bw) return;
+    let c = picker.getColor();
     
-    board.fillColor(round(mouseX/width*board.pic.width),round(mouseY/height*board.pic.height),100,100,100);
+    board.fillColor(round(mouseX/width*board.pic.width),round(mouseY/height*board.pic.height),c[0],c[1],c[2]);
     
 }
 
@@ -53,6 +59,7 @@ function draw(){
         board.display();
     }
     else{
-        background(100)
+        background(255)
     }
+    picker.display();
 }

@@ -31,15 +31,16 @@ class Board{
     }
 
     fillColor(x,y,r,g,b){
-        this.startedColoring = true;
-        this.pic.loadPixels();
+        //this.pic.loadPixels();
         let visited = [];
         for(let i = 0; i < this.pic.width*this.pic.height; i++){
             visited.push(false);
         }
         let ind = 4*(x+y*this.pic.width);
         if(this.pic.pixels[ind]===0 && this.pic.pixels[ind+1]===0 && this.pic.pixels[ind+2]===0) return;
-                
+        if(x<0 || y<0 || x>=this.pic.width || y>=this.pic.height) return;
+
+        this.startedColoring = true;
         let stack = [];
         let dx = [1,-1,0,0];
         let dy = [0,0,-1,1];
@@ -72,7 +73,7 @@ class Board{
         if(this.startedColoring){
            return;
         }
-        this.pic.loadPixels();
+        //this.pic.loadPixels();
         for(let i = 0; i < 4*this.pic.width*this.pic.height; i+=4){
             let sum = 0;
 
@@ -89,7 +90,6 @@ class Board{
             }
             for(let j = 0; j < 3; j++){
                 this.pic.pixels[i+j]=val;
-            
             }
         }
         this.pic.updatePixels();
